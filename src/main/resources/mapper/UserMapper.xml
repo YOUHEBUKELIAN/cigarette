@@ -1,42 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.web.mapper.UserMapper" >
-    <resultMap id="BaseResultMap" type="com.huoli.demo.entity.Xuser" >
-        <id column="xuser_id" property="id" jdbcType="BIGINT" />
-        <result column="xuser_name" property="name" jdbcType="VARCHAR" />
-        <result column="xuser_age" property="age" jdbcType="BIGINT" />
-    </resultMap>
+<mapper namespace="com.example.web.dao.UserDao" >
 
-    <sql id="Base_Column_List" >
-        xuser_id, xuser_name, xuser_age
-    </sql>
-
-    <select id="getAll" resultMap="BaseResultMap"  >
-        SELECT
-        <include refid="Base_Column_List" />
-        FROM xuser
-    </select>
-
-    <select id="getOne" parameterType="java.lang.Long" resultMap="BaseResultMap" >
-        SELECT
-        <include refid="Base_Column_List" />
-        FROM xuser
-        WHERE id = #{id}
-    </select>
-
-    <insert id="insert" >
-        INSERT INTO
-            xuser
-            (xuser_id,xuser_name,xuser_age)
-        VALUES
-            (#{id}, #{name}, #{age})
+    <insert id="insert">
+        insert into user(mail,type,password)
+        values(#{mail},#{type},md5(#{password}))
     </insert>
+    <select id="checkMail" resultType="java.lang.Integer">
+        select count(*) from user where mail=#{mail}
+    </select>
+    <select id="login" resultType="com.example.web.entity.User">
+        select * from user where mail=#{mail}
+    </select>
 
-    <delete id="delete" parameterType="java.lang.Long" >
-        DELETE FROM
-            xuser
-        WHERE
-            xuser_id =#{id}
-    </delete>
 
+<!--    <select id="login">-->
+<!--        select-->
+<!--    </select>-->
 </mapper>

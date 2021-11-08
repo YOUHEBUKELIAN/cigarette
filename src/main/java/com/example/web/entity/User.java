@@ -1,26 +1,28 @@
 package com.example.web.entity;
 
 public class User {
-    private int uid;
-    private String tele;
+    private int id;
+    private String mail;
     private String password;
     private int type;
-    private String uname;
 
-    public User(int uid, String tele, String password, int type, String uname) {
-        this.uid = uid;
-        this.tele = tele;
+
+    public User() {
+    }
+
+    public User(int id, String mail, String password) {
+        this.id = id;
+        this.mail = mail;
         this.password = password;
-        this.type = type;
-        this.uname = uname;
+        this.type = 0;
     }
 
-    public int getUid() {
-        return uid;
+    public int getId() {
+        return id;
     }
 
-    public String getTele() {
-        return tele;
+    public String getMail() {
+        return mail;
     }
 
     public String getPassword() {
@@ -31,16 +33,13 @@ public class User {
         return type;
     }
 
-    public String getUname() {
-        return uname;
+
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
-
-    public void setTele(String tele) {
-        this.tele = tele;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public void setPassword(String password) {
@@ -51,7 +50,5 @@ public class User {
         this.type = type;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
+
 }
