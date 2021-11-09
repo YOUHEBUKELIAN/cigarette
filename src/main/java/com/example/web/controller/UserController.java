@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 
@@ -17,15 +17,15 @@ public class UserController {
 
     @PostMapping(value = "/register")
     //验证码是否正确，邮箱是否被注册，邮箱是否存在
-    Result register(@RequestParam(value="email") String email, @RequestParam(value = "password") String password,@RequestParam(value = "type") int type,@RequestParam(value = "identifyCode") String identityCode){
+    Result register(@RequestParam(value="email") String email, @RequestParam(value = "password") String password,@RequestParam(value = "identifyCode") String identityCode){
         Result result=new Result();
-        if(userservice.register(email,password,type,identityCode)==1){
+        if(userservice.register(email,password,identityCode)==1){
             result.setCode(100);
             result.setMessage("注册成功");
-        }else if(userservice.register(email,password,type,identityCode)==0){
+        }else if(userservice.register(email,password,identityCode)==0){
             result.setCode(0);
             result.setMessage("验证码错误");
-        }else if(userservice.register(email,password,type,identityCode)==4){
+        }else if(userservice.register(email,password,identityCode)==4){
             result.setCode(300);
             result.setMessage("验证码已失效");
         }else{
@@ -43,14 +43,14 @@ public class UserController {
     @PostMapping(value = "/login")
     Result login(@RequestParam(value = "email") String email,@RequestParam(value="pw") String pw){
         Result result=new Result();
-        String token=userservice.login(email,pw);
-        if("用户未注册".equals(token)){
+        String[] token=userservice.login(email,pw);
+        if("用户未注册".equals(token[0])){
             result.setCode(0);
             result.setMessage("用户未注册");
-        }else if("密码错误".equals(token)){
+        }else if("密码错误".equals(token[0])){
             result.setCode(200);
             result.setMessage("密码错误");
-            result.setData(token);
+
         }else{
             result.setCode(100);
             result.setMessage("登录成功");

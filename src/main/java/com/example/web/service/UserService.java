@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +18,7 @@ public class UserService {
     private UserDao userdao;
     @Autowired
     private RedisTemplate redisTemplate;
-    public int register(String mail,String password,int type,String identifyCode){
+    public int register(String mail,String password,String identifyCode){
 
         String identy_code=(String) redisTemplate.opsForValue().get(mail);
         if(identy_code==null){
@@ -27,7 +28,7 @@ public class UserService {
             return 0;//验证码错误
         }
         if(userdao.checkMail(mail)==0){
-            userdao.insert(mail,type,password);
+            userdao.insert(mail,0,password);
             return 1;//注册成功，插入数据
         }else{
             return 2;//邮箱已注册
@@ -38,17 +39,23 @@ public class UserService {
         redisTemplate.opsForValue().set(mail,code,2, TimeUnit.MINUTES);
         return 1;
     }
-    public String login(String mail,String password){
+    public String[] login(String mail, String password){
+        String[] r=new String[2];
         if(userdao.login(mail).size()==0){
-            return "用户未注册";
+            r[0]="用户未注册";
+
+            return r;
         }
         User user=userdao.login(mail).get(0);
         if(!user.getPassword().equals(MD5Util.encode(password))){
-            return "密码错误";
+            r[0]="密码错误";
+            return r;
         }else{
             String token=UUID.randomUUID().toString();
             redisTemplate.opsForValue().set(token,mail,120,TimeUnit.MINUTES);
-            return token;
+            r[0]=token;
+            r[1]=user.getType()+"";
+            return r;
         }
     }
 }

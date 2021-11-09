@@ -1,5 +1,6 @@
 package com.example.web.dao;
 
+import com.example.web.entity.Cigarette;
 import com.example.web.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -35,4 +36,6 @@ public interface UserDao {
      * @return
      */
     List<User> login(@Param("mail") String mail);
+
+    List<Cigarette> getTrueCigarette(@Param("name")String name);
 }

@@ -12,6 +12,9 @@
     <select id="login" resultType="com.example.web.entity.User">
         select * from user where mail=#{mail}
     </select>
+    <select id="getTrueCigarette" resultType="com.example.web.entity.Cigarette">
+        select * from cigarette_record where name=#{name} and type=1
+    </select>
 
 
 <!--    <select id="login">-->
