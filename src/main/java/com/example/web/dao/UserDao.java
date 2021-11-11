@@ -37,5 +37,10 @@ public interface UserDao {
      */
     List<User> login(@Param("mail") String mail);
 
-    List<Cigarette> getTrueCigarette(@Param("name")String name);
+    /**
+     *
+     * @param mail
+     * @return uid
+     */
+    long emailToUid(@Param("mail")String mail);
 }
