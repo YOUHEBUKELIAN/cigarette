@@ -20,6 +20,9 @@
     <update id="notPass">
         update feedback set amail=#{amail},status=2 where id=#{id}
     </update>
+    <select id="idToRecord" resultType="com.example.web.entity.Feedback">
+        select * from feedback where id=#{id}
+    </select>
 <!--    <select id="idToRecord" resultType="com.example.web.entity.Feedback">-->
 <!--        select * from-->
 <!--    </select>-->

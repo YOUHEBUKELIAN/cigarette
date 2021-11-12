@@ -1,6 +1,7 @@
 package com.example.web.service;
 
 import com.example.web.dao.SearchRecordDao;
+import com.example.web.entity.Cigarette;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -18,7 +19,7 @@ public class SearchRecordService {
     private RedisTemplate redisTemplate;
 
 
-    public List<List<String>> getTrueAndFalseList(String name){
+    public List<List<Cigarette>> getTrueAndFalseList(String name){
         if("".equals(name)){
             return null;
         }
@@ -29,7 +30,7 @@ public class SearchRecordService {
         }else{
             zSetOperations.incrementScore("score",name,1);
         }
-        List<List<String>> two=new ArrayList<List<String>>();
+        List<List<Cigarette>> two=new ArrayList<List<Cigarette>>();
 //        zSetOperations.removeRange("score",0,3);
         two.add(searchRecordDao.getFalseCigarette(name));
         two.add(searchRecordDao.getTrueCigarette(name));

@@ -7,5 +7,9 @@
     <select id="getAllFalseCigarettes" resultType="com.example.web.entity.Cigarette">
         select * from cigarette_record where type=0
     </select>
+    <insert id="addCigarette">
+        insert into cigarette_record (name,picUrl,type)
+        values (#{name},#{picUrl},#{type})
+    </insert>
 
 </mapper>

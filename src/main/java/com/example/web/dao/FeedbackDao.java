@@ -44,4 +44,6 @@ public interface FeedbackDao {
      * 不通过审核操作，更新数据库aid，status
      */
     void notPass(int id,String amail);
+
+    Feedback idToRecord(int id);
 }

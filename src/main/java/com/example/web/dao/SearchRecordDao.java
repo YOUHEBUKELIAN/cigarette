@@ -11,7 +11,7 @@ public interface SearchRecordDao {
      * @param name 香烟名字
      * @return list 真香烟列表
      */
-    List<String> getTrueCigarette(@Param("name")String name);
+    List<Cigarette> getTrueCigarette(@Param("name")String name);
 
-    List<String> getFalseCigarette(@Param("name")String name);
+    List<Cigarette> getFalseCigarette(@Param("name")String name);
 }

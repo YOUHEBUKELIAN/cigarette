@@ -1,5 +1,6 @@
 package com.example.web.service;
 
+import com.example.web.dao.CigaretteDao;
 import com.example.web.dao.FeedbackDao;
 import com.example.web.dao.UserDao;
 import com.example.web.entity.Feedback;
@@ -20,9 +21,12 @@ public class FeedbackService {
     private FeedbackDao feedbackDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private CigaretteDao cigaretteDao;
     //增加一条反馈记录，保存图片
     public void addFeedbackRecord(String description, MultipartFile file,String name,String uemail,int type){
         long uid= userDao.emailToUid(uemail);
+
         //生成不重复图片名字
         String picUrl=name+"/"+name+ UUID.randomUUID().toString()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 
@@ -54,6 +58,13 @@ public class FeedbackService {
     }
     //管理员通过反馈记录
     public void passFeedback(int id,String amail){
+        Feedback feedback=feedbackDao.idToRecord(id);
+
+        //生成不重复图片名字
+        String picUrl=feedback.getPicUrl();
+
+        cigaretteDao.addCigarette(feedback.getCname(),picUrl,feedback.getType());
+
         feedbackDao.pass(id,amail);
     }
     //管理员不通过反馈记录

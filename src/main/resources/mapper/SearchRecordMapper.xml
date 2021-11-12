@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.web.dao.SearchRecordDao" >
-    <select id="getTrueCigarette" resultType="java.lang.String">
-        select picUrl from cigarette_record where name=#{name} and type=1
+    <select id="getTrueCigarette" resultType="com.example.web.entity.Cigarette">
+        select * from cigarette_record where name=#{name} and type=1
     </select>
 
-    <select id="getFalseCigarette" resultType="java.lang.String">
-        select picUrl from cigarette_record where name=#{name} and type=0
+    <select id="getFalseCigarette" resultType="com.example.web.entity.Cigarette">
+        select * from cigarette_record where name=#{name} and type=0
     </select>
 </mapper>
