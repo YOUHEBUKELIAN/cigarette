@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SearchRecordService {
@@ -18,6 +19,9 @@ public class SearchRecordService {
 
 
     public List<List<String>> getTrueAndFalseList(String name){
+        if("".equals(name)){
+            return null;
+        }
         //搜索一次该香烟score+1
         ZSetOperations zSetOperations=redisTemplate.opsForZSet();
         if(zSetOperations.rank("score",name)==null){
@@ -26,8 +30,15 @@ public class SearchRecordService {
             zSetOperations.incrementScore("score",name,1);
         }
         List<List<String>> two=new ArrayList<List<String>>();
+//        zSetOperations.removeRange("score",0,3);
         two.add(searchRecordDao.getFalseCigarette(name));
         two.add(searchRecordDao.getTrueCigarette(name));
         return two;
+    }
+    public Set<String> getRank(){
+        ZSetOperations zSetOperations=redisTemplate.opsForZSet();
+        System.out.println(zSetOperations.range("score",0,10));
+
+        return zSetOperations.reverseRange("score",0,10);
     }
 }

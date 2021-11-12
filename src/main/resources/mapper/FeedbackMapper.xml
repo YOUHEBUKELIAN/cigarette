@@ -5,4 +5,22 @@
         insert into feedback (description,picUrl,name,uid,type)
         values (#{description},#{picUrl},#{name},#{uid},#{type});
     </insert>
+    <select id="returnNonCheckFeedbackList" resultType="com.example.web.entity.Feedback">
+        select * from feedback where status=0
+    </select>
+    <select id="returnPassFeedbackList" resultType="com.example.web.entity.Feedback">
+        select * from feedback where status=1
+    </select>
+    <select id="returnNotPassFeedbackList" resultType="com.example.web.entity.Feedback">
+        select * from feedback where status=2
+    </select>
+    <update id="pass">
+        update feedback set amail=#{amail},status=1 where id=#{id}
+    </update>
+    <update id="notPass">
+        update feedback set amail=#{amail},status=2 where id=#{id}
+    </update>
+<!--    <select id="idToRecord" resultType="com.example.web.entity.Feedback">-->
+<!--        select * from-->
+<!--    </select>-->
 </mapper>

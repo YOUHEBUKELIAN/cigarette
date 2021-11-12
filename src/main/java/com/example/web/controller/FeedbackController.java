@@ -1,8 +1,10 @@
 package com.example.web.controller;
 
 import com.example.web.Result;
+import com.example.web.annotation.Filter;
 import com.example.web.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +22,8 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
-    @RequestMapping("/upload")
+    @PostMapping("/upload")
+    @Filter(true)
     Result upload(@RequestParam("description") String description,
                   @RequestParam("file") MultipartFile file,
                   @RequestParam("name")String name,

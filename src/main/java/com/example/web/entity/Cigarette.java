@@ -1,20 +1,20 @@
 package com.example.web.entity;
 
 public class Cigarette {
-    private int cid;
+    private int id;
     private String picUrl;
-    private String cname;
+    private String name;
     private int type;
 
     public Cigarette(int cid, String picUrl, String cname, int type) {
-        this.cid = cid;
+        this.id = cid;
         this.picUrl = picUrl;
-        this.cname = cname;
+        this.name = cname;
         this.type = type;
     }
 
     public int getCid() {
-        return cid;
+        return id;
     }
 
     public String getPicUrl() {
@@ -22,7 +22,7 @@ public class Cigarette {
     }
 
     public String getCname() {
-        return cname;
+        return name;
     }
 
     public int getType() {
@@ -30,7 +30,7 @@ public class Cigarette {
     }
 
     public void setCid(int cid) {
-        this.cid = cid;
+        this.id = cid;
     }
 
     public void setPicUrl(String picUrl) {
@@ -38,7 +38,7 @@ public class Cigarette {
     }
 
     public void setCname(String cname) {
-        this.cname = cname;
+        this.name = cname;
     }
 
     public void setType(int type) {

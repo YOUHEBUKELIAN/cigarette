@@ -9,6 +9,6 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface filter {
+public @interface Filter {
     boolean value() default false;
 }

@@ -1,6 +1,6 @@
 package com.example.web.config;
 
-import com.example.web.annotation.filter;
+import com.example.web.annotation.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class Handle implements HandlerInterceptor {
         //拦截获取添加在适配器上的注解，判断是否有添加的放行注解
         HandlerMethod method = (HandlerMethod) handler;
 
-        filter filterFrom = method.getMethodAnnotation(filter.class);
+        Filter filterFrom = method.getMethodAnnotation(Filter.class);
 
         /**
          * 添加了filterfrom注解就进行登录验证

@@ -1,32 +1,35 @@
 package com.example.web.entity;
 
 public class Feedback {
-    private int fid;
+    private int id;
     private String picUrl;
-    private String cname;
+    private String name;
     private int type;
     private int uid;
-    private String txt;
+    private String description;
     private int status;
-    private int sid;
+    private String amail;
 
-    public Feedback(int fid, String picUrl, String cname, int type, int uid, String txt, int status, int sid) {
-        this.fid = fid;
+    public Feedback(){
+
+    }
+    public Feedback(int id, String picUrl, String name, int type, int uid, String description, int status, String amail) {
+        this.id = id;
         this.picUrl = picUrl;
-        this.cname = cname;
+        this.name = name;
         this.type = type;
         this.uid = uid;
-        this.txt = txt;
+        this.description = description;
         this.status = status;
-        this.sid = sid;
+        this.amail = amail;
     }
 
     public int getFid() {
-        return fid;
+        return id;
     }
 
     public void setFid(int fid) {
-        this.fid = fid;
+        this.id = fid;
     }
 
     public String getPicUrl() {
@@ -38,11 +41,11 @@ public class Feedback {
     }
 
     public String getCname() {
-        return cname;
+        return name;
     }
 
     public void setCname(String cname) {
-        this.cname = cname;
+        this.name = cname;
     }
 
     public int getType() {
@@ -62,11 +65,11 @@ public class Feedback {
     }
 
     public String getTxt() {
-        return txt;
+        return description;
     }
 
     public void setTxt(String txt) {
-        this.txt = txt;
+        this.description = txt;
     }
 
     public int getStatus() {
@@ -77,11 +80,11 @@ public class Feedback {
         this.status = status;
     }
 
-    public int getSid() {
-        return sid;
+    public String getSid() {
+        return amail;
     }
 
-    public void setSid(int sid) {
-        this.sid = sid;
+    public void setSid(String sid) {
+        this.amail = sid;
     }
 }
