@@ -21,9 +21,8 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
-    public static MultipartFile f;
-    @Autowired
-    private RedisTemplate redisTemplate;
+
+
     @PostMapping("/upload")
     @Filter(true)
     Result upload(@RequestParam("description") String description,
@@ -33,9 +32,7 @@ public class FeedbackController {
                   @RequestParam("type")int type){
         Result r=new Result(100,"反馈成功");
 
-        f=file;
 
-        System.out.println(f);
         try {
             feedbackService.addFeedbackRecord(description,file,name,mail,type);
         }catch (Exception e){

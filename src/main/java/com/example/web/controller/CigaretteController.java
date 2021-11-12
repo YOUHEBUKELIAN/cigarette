@@ -5,13 +5,16 @@ import com.example.web.annotation.Filter;
 import com.example.web.entity.Cigarette;
 import com.example.web.service.CigaretteService;
 import com.example.web.service.SearchRecordService;
+import com.example.web.util.pictureDetect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/cigarette")
@@ -51,13 +54,17 @@ public class CigaretteController {
     @PostMapping("/pictureRecognize")
     Result pictureRecognize(@RequestParam("picture")MultipartFile picture){
         Result r=new Result(100,"上传成功");
+
         r.setData(cigaretteService.pictureRecognize(picture));
         return r;
     }
+    //模拟python接口
+    @ResponseBody
     @PostMapping("/test")
-    Result test(@RequestParam("file")MultipartFile file){
-        Result r=new Result(100,"上传成功");
-        r.setData("白沙");
-        return r;
+    Map test(@RequestParam("file")MultipartFile file){
+        Map m=new HashMap<String,String>();
+        m.put("name","baisha");
+        m.put("type","1");
+        return m;
     }
 }

@@ -26,10 +26,7 @@ class WebApplicationTests {
     private FeedbackService feedbackService;
     @Test
     void contextLoads() throws InterruptedException {
-
-        System.out.println(FeedbackController.f);
-        pictureDetect.postPicture(FeedbackController.f);
-
+        redisTemplate.opsForValue().get("file");
     }
 
 

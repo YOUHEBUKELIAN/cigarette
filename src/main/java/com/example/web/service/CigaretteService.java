@@ -1,7 +1,9 @@
 package com.example.web.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.web.dao.CigaretteDao;
 import com.example.web.entity.Cigarette;
+import com.example.web.util.pictureDetect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,10 +25,20 @@ public class CigaretteService {
         list.add(cigaretteDao.getAllTrueCigarettes());
         return list;
     }
-    public boolean pictureRecognize(MultipartFile picture){
+    public String[] pictureRecognize(MultipartFile picture){
         //todo 访问python接口
-        String name="白沙";
-        int type=1;
+
+        String string=pictureDetect.postPicture(picture);
+        //String转json格式，获取返回的url地址
+
+        JSONObject jsonObject= com.alibaba.fastjson.JSON.parseObject(string);
+
+        System.out.println(jsonObject.getString("name"));
+        System.out.println(jsonObject);
+        String name=jsonObject.getString("name");
+
+        int type=Integer.parseInt(jsonObject.getString("type"));
+
         //生成不重复图片名字
         String picUrl=name+"/"+name+ UUID.randomUUID().toString()+picture.getOriginalFilename().substring(picture.getOriginalFilename().lastIndexOf("."));
 
@@ -44,7 +56,12 @@ public class CigaretteService {
             e.printStackTrace();
         }
         cigaretteDao.addCigarette(name,picUrl,type);
-        return true;
+
+        String[] s=new String[2];
+        s[0]=name;
+        s[1]=type+"";
+
+        return s;
 
     }
 }
