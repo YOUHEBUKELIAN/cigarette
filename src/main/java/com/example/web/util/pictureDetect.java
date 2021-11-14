@@ -4,6 +4,7 @@ package com.example.web.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -11,6 +12,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,30 +32,40 @@ public class pictureDetect {
 
         RestTemplate rest = new RestTemplate();
 
+        //转64
+        BASE64Encoder encoder = new BASE64Encoder();
+        String imgData="";
+        try{
+        imgData ="data:image/"+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."))+";base64,"+ encoder.encode(file.getBytes());
+        System.out.println(imgData);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
         //multipartfile转file
         //生成不重复图片名字
-        String picUrl=UUID.randomUUID().toString()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-
-        File dest = new File("D:\\templ/"+picUrl);
-        // 检测是否存在目录
-        if (!dest.getParentFile().exists()) {
-            dest.getParentFile().mkdirs();
-        }
-        try {
-            file.transferTo(dest);
-
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        String picUrl=UUID.randomUUID().toString()+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+//
+//        File dest = new File("D:/tem/"+picUrl);
+//        // 检测是否存在目录
+//        if (!dest.getParentFile().exists()) {
+//            dest.getParentFile().mkdirs();
+//        }
+//        try {
+//            //file.transferTo(dest);
+//
+//            FileUtils.copyInputStreamToFile(file.getInputStream(),dest);
+//        } catch (IllegalStateException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
         //获取本地文件
-        FileSystemResource resource = new FileSystemResource(dest);
+        //FileSystemResource resource = new FileSystemResource(dest);
         //将本地文件编辑为formdata格式的数据
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<String, Object>();
-        param.add("file", resource);
+        param.add("file", imgData);
 
         //发送post请求，并获取返回信息
         ResponseEntity<String> responseEntity = rest.postForEntity(url, param, String.class);

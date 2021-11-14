@@ -54,7 +54,6 @@ public class CigaretteController {
     @PostMapping("/pictureRecognize")
     Result pictureRecognize(@RequestParam("picture")MultipartFile picture){
         Result r=new Result(100,"上传成功");
-
         r.setData(cigaretteService.pictureRecognize(picture));
         return r;
     }

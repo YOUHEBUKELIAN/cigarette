@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.web.dao.CigaretteDao;
 import com.example.web.entity.Cigarette;
 import com.example.web.util.pictureDetect;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.apache.commons.io.FileUtils;
 
 @Service
 public class CigaretteService {
@@ -42,19 +44,21 @@ public class CigaretteService {
         //生成不重复图片名字
         String picUrl=name+"/"+name+ UUID.randomUUID().toString()+picture.getOriginalFilename().substring(picture.getOriginalFilename().lastIndexOf("."));
 
-        File dest = new File("D:\\test/"+picUrl);
+        File dest = new File("D:/test/"+picUrl);
         // 检测是否存在目录
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
         }
         try {
-            picture.transferTo(dest);
+            //picture.transferTo(dest);
 
+            FileUtils.copyInputStreamToFile(picture.getInputStream(), dest);
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //往数据库添加该条香烟数据
         cigaretteDao.addCigarette(name,picUrl,type);
 
         String[] s=new String[2];
