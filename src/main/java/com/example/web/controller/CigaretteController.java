@@ -60,7 +60,7 @@ public class CigaretteController {
     //模拟python接口
     @ResponseBody
     @PostMapping("/test")
-    Map test(@RequestParam("file")MultipartFile file){
+    Map test(@RequestParam("file")String file){
         Map m=new HashMap<String,String>();
         m.put("name","baisha");
         m.put("type","1");
